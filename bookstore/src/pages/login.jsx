@@ -11,11 +11,9 @@ import { TailSpin } from 'react-loader-spinner';
 const exo_2 = Exo_2({ subsets: ['latin'] })
 const open_sans = Open_Sans({ subsets: ['latin'] })
 
-
-export default function Signup() {
+export default function Login() {
 
     const router = useRouter()
-    const [name, setName] = useState("")
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
     let [submitting, setSubmitting] = useState(false)
@@ -27,11 +25,6 @@ export default function Signup() {
 
 
         let validation = true
-
-        if (!name) {
-            temp.name = "Name field is required"
-            validation = false
-        }
 
         if (!email) {
             temp.email = "Email field is required"
@@ -48,16 +41,16 @@ export default function Signup() {
 
         if (validation) {
             setSubmitting(true)
-            axios.post(`${URL_Domain}/signup`, {
-
-                "name": name,
+            axios.post(`${URL_Domain}/login`, {
                 "email": email,
                 "password": password,
 
             }).then(res => {
-                console.log(res.data);
+                // console.log(res);
+                localStorage.setItem("access_token", res.data.access_token)
                 setSubmitting(false)
-                router.push("/login")
+                router.push("/")
+
             }).catch(err => {
                 setSubmitting(false)
                 let arr = err.response.data.errors
@@ -74,32 +67,27 @@ export default function Signup() {
                         });
 
                     })
+
+
                     setErrors(temp)
 
 
+                }
+
+                // console.log(err);
+                if (err.response.data.msg) {
+                    toast.error(err.response.data.msg, {
+                        position: toast.POSITION.TOP_RIGHT
+                    });
                 }
             })
         }
 
     }
 
-
     return (
         <main className="container pt-48">
             <form className="flex flex-col gap-4 items-center w-full" onSubmit={handleSubmit}>
-                <div className='w-full md:w-1/3'>
-                    <label htmlFor='name' className="block after:content-['*'] after:ml-0.5 after:text-red-500">Name</label>
-                    <input type="text" name='name' onChange={(event) => {
-                        setName(event.target.value)
-                        if (event.target.value) {
-                            setErrors({ ...errors, name: "" })
-                        } else {
-                            setErrors({ ...errors, name: "Name field is required" })
-                        }
-                    }} className="border py-1 px-4 rounded-md mt-1 w-full outline-none" />
-                    {errors.name && <small className="text-red-500">{errors.name}</small>}
-                </div>
-
                 <div className='w-full md:w-1/3'>
                     <label htmlFor='email' className="block after:content-['*'] after:ml-0.5 after:text-red-500">Email</label>
                     <input type="email" name='email' onChange={(event) => {
@@ -127,7 +115,7 @@ export default function Signup() {
                 </div>
 
                 <div className='w-full md:w-1/3'>
-                    <button type='submit' disabled={submitting} className={`disabled:bg-primary/70 w-full bg-primary text-white border border-primary hover:bg-white hover:text-primary rounded-md px-8 py-1 ${exo_2.className} w-full flex justify-center gap-4`}>Signup
+                    <button type='submit' disabled={submitting} className={`disabled:bg-primary/70 w-full bg-primary text-white border border-primary hover:bg-white hover:text-primary rounded-md px-8 py-1 ${exo_2.className} w-full flex justify-center gap-4`}>Login
                         {submitting && <TailSpin
                             height="20"
                             width="20"
@@ -140,10 +128,9 @@ export default function Signup() {
                         />}</button>
                 </div>
 
-                <p className={`text-heading1 ${open_sans.className}`}>Already have an account? <Link href={"/login"}>Login</Link></p>
+                <p className={`text-heading1 ${open_sans.className}`}>Don't have an account? <Link href={"/signup"}>Signup</Link></p>
             </form>
             <ToastContainer />
         </main>
-
     )
 }

@@ -22,6 +22,9 @@ export default function Nav() {
         <li className='hover:text-primary'>
           <Link href={"/cart"}>Cart</Link>
         </li>
+        <li className='hover:text-primary'>
+          <Link href={"/logout"}>Logout</Link>
+        </li>
         <li className={`bg-primary text-white border border-primary hover:bg-white hover:text-primary rounded-sm px-4 py-1 ${exo_2.className}`}>
           <Link href={"/login"}>Login</Link>
         </li>
