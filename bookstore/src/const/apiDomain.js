@@ -1,1 +1,1 @@
-export const URL_Domain = "http://localhost:5000/api"
+export const URL_Domain = "https://book-store-back-end.vercel.app/api"

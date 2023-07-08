@@ -1,6 +1,6 @@
 import '@/styles/globals.css'
 
-import React, { useEffect } from 'react'
+import React, { useEffect} from 'react'
 import { QueryClient, QueryClientProvider, Hydrate } from '@tanstack/react-query'
 import 'react-toastify/dist/ReactToastify.css';
 import Header from '@/components/Header'

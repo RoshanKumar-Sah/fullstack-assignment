@@ -35,7 +35,7 @@ export default function Nav() {
             <li className='capitalize'>
               {user.name}
             </li>
-            <li className='hover:text-primary' onClick={() => {
+            <li className='hover:text-primary cursor-pointer' onClick={() => {
               dispatch(logout())
             }}>
               Logout

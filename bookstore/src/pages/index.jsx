@@ -1,6 +1,3 @@
-import Image from 'next/image'
-
-import Header from '@/components/Header'
 import { URL_Domain } from '@/const/apiDomain';
 import { dehydrate, QueryClient } from '@tanstack/react-query'
 import Catalogue from '@/components/Catalogue';
